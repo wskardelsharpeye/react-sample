@@ -1,0 +1,113 @@
+/* QuoteApp.css */
+.quote-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 使容器占满整个视口高度 */
+    padding: 20px;
+    gap: 20px;
+    background-color: #fff; /* White background */
+    font-family: 'Arial', sans-serif; /* Modern font */
+  }
+  
+  .header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px; /* Space after the header */
+  }
+  
+  .input-field {
+    background-color: #f5f5f5; /* Light grey background */
+    padding: 10px;
+    border-radius: 4px;
+    flex: 1;
+    border: 1px solid #e0e0e0; /* Light grey border */
+  }
+  
+  .input-field label {
+    margin-right: 5px;
+    font-weight: bold;
+    color: #333; /* Dark grey text */
+  }
+  
+  .content-area {
+    flex: 1; /* 占满剩余空间 */
+    display: flex;
+    gap: 20px;
+    min-height: 0; /* 防止 flex 容器溢出 */
+  }
+  
+  .template-box,
+  .test-result-box {
+    flex: 1; /* 使编辑器和结果框占满剩余空间 */
+    background-color: #f0f0f0; /* Very light grey background */
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd; /* Light border */
+    color: #333; /* Dark grey text */
+    overflow: auto; /* 允许内容滚动 */
+    min-height: 0; /* 防止 flex 容器溢出 */
+  }
+  
+  .test-result-box pre {
+    text-align: left; /* Align text to the left in test results */
+    white-space: pre-wrap; /* Preserve formatting in test results */
+    font-family: monospace;
+    font-size: 14px; /* Adjust font size */
+    margin: 0; /* Remove default margins */
+  }
+  
+  .button-area {
+    display: flex;
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: flex-start; /* 从左到右排列 */
+    gap: 10px;
+    margin-bottom: 15px; /* 保持与下方内容的间距 */
+  }
+
+  .button-area .script-tuning-text {
+    font-weight: bold;
+    color: #333; /* 文本颜色 */
+    margin-right: auto; /* 将文本推到最左边，按钮靠右 */
+  }
+  
+  .button-area button {
+    background-color: #0077c0; /* HSBC blue */
+    color: #fff; /* White text */
+    padding: 10px 15px; /* Button spacing */
+    border-radius: 4px;
+    border: none; /* Remove border */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  .button-area button:hover {
+    background-color: #00538c; /* Darker blue on hover */
+  }
+
+  .upload-area {
+    margin-top: 1px;
+    padding: 15px;
+    border: 1px dashed #007bff;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #0056b3;
+}
+
+.upload-area p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.uploaded-file {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}

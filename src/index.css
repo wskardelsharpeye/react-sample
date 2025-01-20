@@ -1,0 +1,89 @@
+/* 全局样式 */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh; /* 使 body 占满整个视口高度 */
+  display: flex;
+  flex-direction: column;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* 根容器样式 */
+#root {
+  flex: 1; /* 使 #root 占满 body 的剩余空间 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 页面布局样式 */
+.quote-app {
+  flex: 1; /* 使 .quote-app 占满 #root 的剩余空间 */
+  display: flex;
+  flex-direction: column;
+  padding: 16px; /* 添加内边距 */
+  box-sizing: border-box; /* 确保内边距不影响高度 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+}
+
+.input-field label {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.content-area {
+  flex: 1; /* 占满剩余空间 */
+  display: flex;
+  gap: 16px; /* 设置子元素之间的间距 */
+}
+
+.template-box {
+  flex: 1; /* 占满剩余空间 */
+  display: flex;
+  flex-direction: column;
+}
+
+.test-result-box {
+  flex: 1; /* 占满剩余空间 */
+  background-color: #f5f5f5;
+  padding: 16px;
+  border: 1px solid #ddd;
+  overflow: auto; /* 允许内容滚动 */
+}
+
+.button-area {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px; /* 设置按钮之间的间距 */
+  margin-top: 16px;
+}
+
+.button-area button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-area button:hover {
+  background-color: #0056b3;
+}

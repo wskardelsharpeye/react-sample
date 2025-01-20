@@ -1,0 +1,1 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:getGreetingResponse xmlns:ns2="http://example.org/soapclient"><ns2:greeting>Hello, victor!</ns2:greeting></ns2:getGreetingResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
