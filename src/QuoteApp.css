@@ -38,6 +38,7 @@
   
   .template-box,
   .test-result-box {
+    height: 70vh; 
     flex: 1; /* 使编辑器和结果框占满剩余空间 */
     background-color: #f0f0f0; /* Very light grey background */
     padding: 20px;
@@ -111,3 +112,4 @@
     font-size: 14px;
     color: #333;
 }
+
