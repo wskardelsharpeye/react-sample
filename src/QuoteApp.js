@@ -24,6 +24,7 @@ function QuoteApp() {
     const [editorMode, setEditorMode] = useState('json');
     const [isJsonValid, setIsJsonValid] = useState(true);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [inputValue, setInputValue] = useState('');
 
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
@@ -89,6 +90,13 @@ function QuoteApp() {
                 <TabPanel>
                     <div className="parse-tab">
                         <div className="button-area">
+                        <input
+    type="text"
+    placeholder="Enter input here"
+    className="input-field"
+    value={inputValue} // State to manage input value
+    onChange={(e) => setInputValue(e.target.value)} // Handler to update state
+/>
                             <span className="script-tuning-text">Script Tuning Tool</span>
                             <button onClick={handleValidateJSON}>Validate JSON</button>
                             <button onClick={handleSendQuote}>Send Quote</button>
