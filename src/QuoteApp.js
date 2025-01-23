@@ -26,6 +26,31 @@ function QuoteApp() {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [inputValue, setInputValue] = useState('');
 
+    const [jsCode, setJsCode] = useState(''); // Store JavaScript code
+const [debugOutput, setDebugOutput] = useState(''); // Store debug output
+
+const handleDebug = () => {
+    try {
+        // Capture console.log output
+        let output = '';
+        const originalConsoleLog = console.log;
+        console.log = (...args) => {
+            output += args.join(' ') + '\n';
+        };
+
+        // Execute the JavaScript code
+        new Function(jsCode)(); // Use Function constructor for safer execution
+
+        // Restore original console.log
+        console.log = originalConsoleLog;
+
+        // Set the debug output
+        setDebugOutput(output || 'Code executed successfully (no output).');
+    } catch (error) {
+        setDebugOutput(`Error: ${error.message}`);
+    }
+};
+
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
         if (file) {
@@ -139,7 +164,27 @@ function QuoteApp() {
                     <div className="tuning-tab">
                         <h2>Tuning Tab</h2>
                         <p>This is the tuning tab content. You can add tuning-specific functionality here.</p>
+
+                        <Editor
+    height="300px"
+    defaultLanguage="javascript"
+    value={jsCode}
+    onChange={(value) => setJsCode(value || '')}
+    options={{
+        minimap: { enabled: false },
+        fontSize: 14,
+        lineNumbers: 'on',
+        automaticLayout: true,
+    }}
+/>
                     </div>
+
+                    <button onClick={handleDebug}>Debug</button>
+
+                    <div className="debug-output">
+    <h3>Debug Output:</h3>
+    <pre>{debugOutput}</pre>
+</div>
                 </TabPanel>
             </Tabs>
         </div>
