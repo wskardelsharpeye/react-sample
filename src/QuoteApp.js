@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css'; // 默认样式
-import './QuoteApp.css'; // 你的自定义样式
-import Editor from '@monaco-editor/react';
+import 'react-tabs/style/react-tabs.css';
+import './QuoteApp.css';
+import Editor, { DiffEditor } from '@monaco-editor/react';
 
 const API_URL = 'http://localhost:8083/ws';
 const XML_PAYLOAD = `
@@ -22,9 +22,11 @@ function QuoteApp() {
     const [testResult, setTestResult] = useState('');
     const [templateContent, setTemplateContent] = useState('');
     const [editorMode, setEditorMode] = useState('json');
-    const [isJsonValid, setIsJsonValid] = useState(true);
+    const [isJsonValid, setIsJsonValid] = useState(true); // eslint-disable-line
     const [uploadedFile, setUploadedFile] = useState(null);
     const [inputValue, setInputValue] = useState('');
+    const [originalJson, setOriginalJson] = useState('{}');
+    const [modifiedJson, setModifiedJson] = useState('{}');
 
     const [jsCode, setJsCode] = useState(''); // Store JavaScript code
 const [debugOutput, setDebugOutput] = useState(''); // Store debug output
@@ -39,7 +41,9 @@ const handleDebug = () => {
         };
 
         // Execute the JavaScript code
-        new Function(jsCode)(); // Use Function constructor for safer execution
+        // eslint-disable-next-line no-new-func
+        const func = new Function(jsCode);
+        func();
 
         // Restore original console.log
         console.log = originalConsoleLog;
@@ -110,6 +114,7 @@ const handleDebug = () => {
                 <TabList>
                     <Tab>Parse</Tab>
                     <Tab>Tuning</Tab>
+                    <Tab>JSON Diff</Tab>
                 </TabList>
 
                 <TabPanel>
@@ -184,7 +189,58 @@ const handleDebug = () => {
                     <div className="debug-output">
     <h3>Debug Output:</h3>
     <pre>{debugOutput}</pre>
-</div>
+                    </div>
+                </TabPanel>
+
+                <TabPanel>
+                    <div className="json-diff-tab">
+                        <div className="diff-editors" style={{ display: 'flex', gap: '20px' }}>
+                            <div className="editor-container" style={{ flex: 1 }}>
+                                <h3>Original JSON</h3>
+                                <Editor
+                                    height="400px"
+                                    defaultLanguage="json"
+                                    value={originalJson}
+                                    onChange={setOriginalJson}
+                                    options={{
+                                        minimap: { enabled: false },
+                                        fontSize: 14,
+                                        lineNumbers: 'on',
+                                        automaticLayout: true,
+                                    }}
+                                />
+                            </div>
+                            <div className="editor-container" style={{ flex: 1 }}>
+                                <h3>Modified JSON</h3>
+                                <Editor
+                                    height="400px"
+                                    defaultLanguage="json"
+                                    value={modifiedJson}
+                                    onChange={setModifiedJson}
+                                    options={{
+                                        minimap: { enabled: false },
+                                        fontSize: 14,
+                                        lineNumbers: 'on',
+                                        automaticLayout: true,
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="diff-viewer">
+                            <h3>Differences</h3>
+                            <DiffEditor
+                                height="400px"
+                                original={originalJson}
+                                modified={modifiedJson}
+                                language="json"
+                                options={{
+                                    readOnly: true,
+                                    renderSideBySide: true,
+                                    minimap: { enabled: false }
+                                }}
+                            />
+                        </div>
+                    </div>
                 </TabPanel>
             </Tabs>
         </div>
