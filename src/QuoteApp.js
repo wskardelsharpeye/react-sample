@@ -4,19 +4,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './QuoteApp.css';
 import Editor, { DiffEditor } from '@monaco-editor/react';
+import DOMPurify from 'dompurify';
 
-const API_URL = 'http://localhost:8083/ws';
-const XML_PAYLOAD = `
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                     xmlns:sch="http://example.org/soapclient">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <sch:getGreetingRequest>
-                <sch:name>victor</sch:name>
-            </sch:getGreetingRequest>
-        </soapenv:Body>
-    </soapenv:Envelope>
-`;
+const API_URL = '/soap/greeting/vvv';
 
 function QuoteApp() {
     const [testResult, setTestResult] = useState('');
@@ -27,7 +17,9 @@ function QuoteApp() {
     const [inputValue, setInputValue] = useState('');
     const [originalJson, setOriginalJson] = useState('{}');
     const [modifiedJson, setModifiedJson] = useState('{}');
+    const [htmlString, setHtmlString] = useState('<h1>Hello, World!</h1>');
 
+    
     const [jsCode, setJsCode] = useState(''); // Store JavaScript code
 const [debugOutput, setDebugOutput] = useState(''); // Store debug output
 
@@ -74,11 +66,10 @@ const handleDebug = () => {
     const handleSendQuote = async () => {
         try {
             const response = await fetch(API_URL, {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'text/xml',
-                },
-                body: XML_PAYLOAD,
+                }
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -115,6 +106,7 @@ const handleDebug = () => {
                     <Tab>Parse</Tab>
                     <Tab>Tuning</Tab>
                     <Tab>JSON Diff</Tab>
+                    <Tab>HTML Display</Tab>
                 </TabList>
 
                 <TabPanel>
@@ -242,6 +234,41 @@ const handleDebug = () => {
                         </div>
                     </div>
                 </TabPanel>
+
+                <TabPanel>
+    <div className="html-display-tab">
+        <h2>HTML Display</h2>
+        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+            <div style={{ flex: 1 }}>
+                <h3>Edit HTML</h3>
+                <Editor
+                    height="300px"
+                    defaultLanguage="html"
+                    value={htmlString}
+                    onChange={(value) => setHtmlString(value || '')}
+                    options={{
+                        minimap: { enabled: false },
+                        fontSize: 14,
+                        lineNumbers: 'on',
+                        automaticLayout: true,
+                    }}
+                />
+            </div>
+            <div style={{ flex: 1 }}>
+                <h3>Preview HTML</h3>
+                <div
+                    style={{
+                        border: '1px solid #ccc',
+                        padding: '10px',
+                        height: '300px',
+                        overflow: 'auto',
+                    }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlString) }}
+                />
+            </div>
+        </div>
+    </div>
+</TabPanel>
             </Tabs>
         </div>
     );
